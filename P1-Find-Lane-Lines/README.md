@@ -1,7 +1,7 @@
 # **Finding Lanes Lines on the Road**
 
 ## Introduction
-It is imporatant for a self driving car to identify lane lines to achieve functionality. Since lanes can be of different colors (yellow and white) and forms (dashed, solid) it gets quite complicated to identify them efficiently. The lighing and the gradient of the roads adds to it complexity. However various mathematical models and alogirthms have been developed to extract lanes lines from a camera efficiently. In this project, a python program is computed to detect lane lines from camera images and further implemented on a video. Canny edge detection, Region Masking and Hough Transform are used to detect lanes. Shortcomings and improvements are also suggested
+It is imporatant for a self driving car to identify lane lines to achieve functionality. Since lanes can be of different colors (yellow and white) and forms (dashed, solid) it gets quite complicated to identify them efficiently. The lighting and the gradient of the roads adds to it complexity. However various mathematical models and algoirthms have been developed to extract lanes lines from a camera efficiently. In this project, a python program is computed to detect lane lines from camera images and further implemented on a video. Canny edge detection, Region Masking and Hough Transform are used to detect lanes. Shortcomings and improvements are also suggested
 
 ## Goals of the Project
 The goals / steps of this project are the following:
@@ -16,11 +16,11 @@ The pipeline has the following steps:
 1. Import the image to be processed
 2. Convert image to grayscale. This reduces the issue due to color and form.
 3. Apply Gaussian smoothining. This suppress noises and all spruious gradients
-4. Implement Canny edge detection algorithm. This identify the pixel poinst with the highest gradients (lane lines)
-5. Focus on the region of interest using cv2.fillPoly. This masks out the surrouding and focus only on the area with the lane lines.
-6. Apply Hough Transform to connect individual pixel points detected by Canny algorithm with lines.
+4. Implement Canny edge detection algorithm. This identifies the pixel points with the highest gradients (lane lines)
+5. Focus on the region of interest using cv2.fillPoly. This masks out the surrouding and focuses only on the area with the lane lines.
+6. Apply Hough Transform to connect individual pixel point detected by Canny algorithm with lines.
 7. Modify the draw_lines() to extend the lines from Hough transform over the entire lane
-8. Overlap the developed lane line with the original image
+8. Overlap the developed lane lines with the original image
 9. Save the image 
 10. Implement the pipeline over a video 
 
@@ -63,7 +63,9 @@ The draw_lines() is defined as above. The left and right lines are  detected usi
 1. slope < -0.3 for the left lane
 2. slope > 0.3 for right lane.
 
-This discards all the flat lines achieveing a smooth lane line. The slopes are inverted as the yaxis is inverted in OpenCv. The start and end points for the y coordinates for the lanes lines to be generated are defined explicitly. Linear curve fitting is executed on the identified left and right lanes using polyfit() function. This function outputs the slope "A" and y intercept "B" in the line equation y=Ax+B. Using these coefficients the "x" cooridnates for the end and start points are calculated. 
+NOTE: The slopes are inverted as the yaxis is inverted in OpenCv.
+
+This discards all the flat lines achieveing a smooth lane line. The start and end points for the y coordinates for the lanes lines to be generated are defined explicitly. Linear curve fitting is executed on the identified left and right lines using polyfit() function. This function outputs the slope "A" and y intercept "B" in the line equation y=Ax+B. Using these coefficients the "x" cooridnates for the end and start points are calculated. 
 
 Finally cv2.line() generates the full lane lines on both sides of the lane. This is merged with the orginal image for display.
 
@@ -85,10 +87,10 @@ Finally cv2.line() generates the full lane lines on both sides of the lane. This
 The vidoes are in my repo if you want to take look
 
 ## Shortcomings
-1. Since i converet the image to grayscale, the effect of the environment was not considered. This includes lights and shadows. Hence the pipeline worked efficiently for the two test videos and failed for the challenge video
+1. Since the image is converted to grayscale, the effect of the environment was not considered. This includes lights and shadows. Hence the pipeline worked efficiently for the two test videos and failed for the challenge video
 2. The top and end coordinates of the lane lines were explicilty defined. This worked fine for minimaL change in steering angle, but this could be inefficient during hard steering manuvers such as lane changes and right/left turns. This could be seen in the challenge video as well
 
 ## Possible Improvements
 1. Alternative for grayscale conversion to include enevironments effects. 
-2. Smoothen the lane line transition from one frame to the next by avaeraging the slopes for the identifies lane lines.
+2. Smoothen the lane line transition from one frame to the next by avaeraging the slopes for the identified lines.
 3. Machine learning can be used to make the pipeline for robust
