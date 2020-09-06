@@ -1,56 +1,58 @@
-# **Finding Lane Lines on the Road** 
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+# **Finding Lanes Lines on the Road**
 
-<img src="examples/laneLines_thirdPass.jpg" width="480" alt="Combined Image" />
+## Introduction
+It is imporatant for a self driving car to stay in lane. To achieve this, it is important to identify the lanes efficiently and clearly. Since lanes can be of different colors (yellow and white) and forms (dashed, solid) it gets quite complicated to identify them efficiently. The lighing and the gradient of the roads adds to it complexity. However various mathematical models and alogirthms have been developed to extract lanes lines from a camera efficiently. In this project, a python program is computed to detect lane lines from camera images and further implemented on a video. Canny edge detection, Region Masking and Hough Transform are used to detect lanes. Shortcomings and improvements are also suggested
 
-Overview
----
+## Goals of the Project
+The goals / steps of this project are the following:
+* Make a pipeline that finds lane lines on the road
+* Reflect on your work in a written report
 
-When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
+## Reflection
+### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
+The pipeline has the following steps:
+1. Import the image to be processed
+2. Convert image to grayscale. This reduces the issue due to color and form.
+3. Apply Gaussian smoothining. This suppress noises and all spruious gradients
+4. Implement Canny edge detection algorithm. This identify the pixel poinst with the highest gradients (lane lines)
+5. Focus on the region of interest using cv2.fillPoly. This masks out the surrouding and focus only on the area with the lane lines.
+6. Apply Hough Transform to connect individual pixel points detected by Canny algorithm with lines.
+7. Modify the draw_lines() to extend the lines from Hough transform over the entire lane
+8. Overlap the developed lane line with the original image
+9. Save the image 
+10. Implement the pipeline over a video 
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
-
-To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
-
-To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
-
-
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
-
-1. Describe the pipeline
-
-2. Identify any shortcomings
-
-3. Suggest possible improvements
-
-We encourage using images in your writeup to demonstrate how your pipeline works.  
-
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
-
-
-The Project
----
-
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
-
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) if you haven't already.
-
-**Step 2:** Open the code in a Jupyter Notebook
-
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out [Udacity's free course on Anaconda and Jupyter Notebooks](https://classroom.udacity.com/courses/ud1111) to get started.
-
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
-
-`> jupyter notebook`
-
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
-
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
+#### 1.1 Modification to draw_lines() function 
+``` python
+    x_leftline = []
+    y_leftline = []
+    x_rightline = []
+    y_rightline = []
+    imshape = image.shape
+    ysize = imshape[0]
+    ystart = int((3/5)*ysize) # selecting the end y coordinates for the line (y1(end),y2(start))
+    yend = int(ysize) #  to caluclate the x cordinates once slope is measured
+    
+    for line in lines:
+        for x1,y1,x2,y2 in line:
+            slope = float(((y2-y1)/(x2-x1)))
+            if (slope < -0.3): # Since the y axis is inversed in Open CV, left lines have a negavtive slope
+                    x_leftline.append(x1)
+                    x_leftline.append(x2)
+                    y_leftline.append(y1)
+                    y_leftline.append(y2)
+            if (slope > 0.3): # Since the y axis is inversed in Open CV, left lines have a negavtive slope
+                    x_rightline.append(x1)
+                    x_rightline.append(x2)
+                    y_rightline.append(y1)
+                    y_rightline.append(y2)
+    # Now construct the lines only when actual lines are detected
+    if (x_leftline!=[]) and (x_rightline!=[]) and (y_leftline!=[]) and (y_rightline!=[]): 
+        AB_leftline = np.polyfit(x_leftline, y_leftline, 1) ## Gives out the slope and intercept (y=Ax+B) for left lines constructed  
+        xstart_left = int((ystart - AB_leftline[1])/AB_leftline[0])
+        xend_left = int((yend - AB_leftline[1])/AB_leftline[0])
+        AB_rightline = np.polyfit(x_rightline, y_rightline, 1) ## Gives out the slope and intercept (y=Ax+B) for right lines constructed
+        xstart_right = int((ystart - AB_rightline[1])/AB_rightline[0])
+        xend_right = int((yend - AB_rightline[1])/AB_rightline[0])
+        cv2.line(img, (xstart_left, ystart), (xend_left, yend), color, thickness) ## Plot both the left and right lines on the image
+        cv2.line(img, (xstart_right, ystart), (xend_right, yend), color, thickness)
