@@ -7,6 +7,8 @@ It is imporatant for a self driving car to stay in lane. To achieve this, it is 
 The goals / steps of this project are the following:
 * Make a pipeline that finds lane lines on the road
 * Reflect on your work in a written report
+* The processed image should look like:
+![](test_images_output/filename.png)
 
 ## Reflection
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
@@ -56,3 +58,37 @@ The pipeline has the following steps:
         xend_right = int((yend - AB_rightline[1])/AB_rightline[0])
         cv2.line(img, (xstart_left, ystart), (xend_left, yend), color, thickness) ## Plot both the left and right lines on the image
         cv2.line(img, (xstart_right, ystart), (xend_right, yend), color, thickness)
+```
+The draw_lines() is defined as above. The left and right lines are  detected using the condition:
+1. slope < -0.3 for the left lane
+2. slope > 0.3 for right lane.
+
+This discards all the flat lines achieveing a smooth lane line. The slopes are inverted as the yaxis is inverted in OpenCv. The start and end points for the y coordinates for the lanes lines to be generated are defined explicitly. Linear curve fitting is executed on the identified left and right lanes using polyfit() function. This function outputs the slope "A" and y intercept "B" in the line equation y=Ax+B. Using these coefficients the "x" cooridnates for the end and start points are calculated. 
+
+Finally cv2.line() generates the full lane lines on both sides of the lane. This is merged with the orginal image for display.
+
+#### 1.2 Pipepline executed on Test Images
+1. Solid White Curve
+![](test_images_output/solidWhiteCurve.jpg)
+2. Solid White Right
+![](test_images_output/solidWhiteRight.jpg)
+3. Solid Yellow Curve
+![](test_images_output/solidYellowCurve.jpg)
+4. Solid Yellow Curve 2
+![](test_images_output/solidYellowCurve2.jpg)
+5. Solid Yellow Left
+![](test_images_output/solidYellowLeft.jpg)
+6. White Car Lane Switch
+![](test_images_output/whiteCarLaneSwitch.jpg)
+
+#### 1.3 Pipeline executed on Test Video
+The vidoes are in my repo if you want to take look
+
+## Shortcomings
+1. Since i converet the image to grayscale, the effect of the environment was not considered. This includes lights and shadows. Hence the pipeline worked efficiently for the two test videos and failed for the challenge video
+2. The top and end coordinates of the lane lines were explicilty defined. This worked fine for minimaL change in steering angle, but this could be inefficient during hard steering manuvers such as lane changes and right/left turns. This could be seen in the challenge video as well
+
+## Possible Improvements
+1. Alternative for grayscale conversion to include enevironments effects. 
+2. Smoothen the lane line transition from one frame to the next by avaeraging the slopes for the identifies lane lines.
+3. Machine learning can be used to make the pipeline for robust
