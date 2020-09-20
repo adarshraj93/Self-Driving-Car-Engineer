@@ -3,7 +3,7 @@
 
  
 ## Introduction
-In this project, the primary goal of the project is to develop a pipeline to identify the lane boundaries in a video. The video stream should be able to detect the lane boundaries along with radius of curvature of the lane lines and vehicle psotion with respect to the centre of the lane.
+In this project, the primary goal is to develop a pipeline to identify the lane boundaries in a video. The video stream should be able to detect the lane boundaries along with the radius of curvature of the lane lines and vehicle position with respect to the centre of the lane.
 
 The final image needs to look like this:
 ![Lanes Image](./examples/example_output.jpg)
@@ -21,14 +21,14 @@ The goals / steps of this project are the following:
 
 
 ## Helper Functions
-Detailed descrption of each function is mentioend in this section of the code. It mentions the inputs, the functioning and output of every function used in the code. Video_Processing.py pythong file is also imported to implement the pipeline difined in the helper functions on the video
+Detailed descrption of each function is mentioend in this section of the code. It mentions the inputs, the functioning and output of every function used in the code. Video_Processing.py python file is also imported to implement the pipeline defined in the helper functions on the video
 
 
 ## Reflection
 ### 1. Camera Calibration
 The OpenCv functions cv2.findChessboardCorners(), cv2.drawChessboardCorners() and cv2.calibrateCamera() are used to calibrate the camera. The 20 images located in ./camera_cal are used as input for camera calibration.
 
-cv2.findChessboardCorners() determines the input image as a view of the chessboard pattern and locates the internal chessboard corners. cv2.drawChessboardCorners() draws draws the individual chessboard corners.
+cv2.findChessboardCorners() determines the input image as a view of the chessboard pattern and locates the internal chessboard corners. cv2.drawChessboardCorners() maps the individual chessboard corners.
 
 The object points, which is the location of the chessboard corners in real world space is appended with positive corner detection with every image. The image points which is the pixel location is also appended. These image and object points are inputed in the function cal_undistort() to calibrate the camera using cv2.calibrateCamera(). The object and image points are appened in the function "camera_calibrate()"" in the code
 
@@ -62,7 +62,7 @@ Example of color and gradient threshold:
 
 
 ### 4. Perspective Transform
-The perspective transform is used to obtain a bird's eye view of the camera view. cv2.getPerspectiveTransform() is used to do this is task. The input is the thresholded binary image
+The perspective transform is used to obtain a bird's eye view of the camera view. cv2.getPerspectiveTransform() is used for this task. The input is the thresholded binary image
 
 Example of prespective transform:
 ![](output_images/Image4.PNG)
@@ -75,7 +75,7 @@ After calibration, thresholding & perspective transform, an binary image is obta
 Computed the histogram for the bottom half of the image. Identified the base of the right and left lane lines as these correspond to the two local maxima in the histogram. Defined windows to identify lane pixels, centered on the midpoint of the pixels from the below window. Curve fit done to obtain the lane lines
 
 #### 5.2 Curve Fit from Previous Frame
-Performs the same function but uses information from previous fit to curve fit the lane lines. Uses the information stored in the class Line()
+Performs the same function but uses information from previous curve fit of the lane lines. Uses the information stored in the class Line()
 
 Example of identifying lane lines and curve-fit. First image uses the sliding window and second image uses curve fit from previous frame to find the lane boundaries
 
@@ -83,7 +83,7 @@ Example of identifying lane lines and curve-fit. First image uses the sliding wi
 
 
 ### 6. Calculate the Radius of Curvature & Vehicle Position
-After the x position of the lane lines are interpolated,a  2nd order polynomial fit can be found of the form Ay^2 + By + C for the two lanes.
+After the x position of the lane lines are interpolated,a  2nd order polynomial fit can be formed of the form Ay^2 + By + C for the two lanes.
 
 The curvature of the lane lines are calculated using the below equation:
 
@@ -94,6 +94,7 @@ The A and B corresponds to the coefficients of the fit of the lane lines. But th
 The conversion is done by modifying the coefficients as follows:
 
 Before: Ay^2 + By + C
+
 After: mx/(my^ 2)Ay^2 + (mx/my)By + C
 
 where mx and my corresponds to the ratio of pixels to meter in the x and y direction.
@@ -123,11 +124,10 @@ NOTE: Due to my busy schedule, i work as a vehicle controls engineer, i havent e
 1. Using the algorithm on steep bends/curves. As seen in the harder_challenge video.
 2. Detecting other vehicles and objects
 3. Sometimes, the tree shadows caused the algorithm to fail
-3. To a camera that is zoomed in as seen challenge_video
 
 ## Possible Improvements
 1. Dynamic Thresholding 
-2. Automatiing the parameter selection for binary thresholding, perspective transformation etc based on a optimiser
+2. Automating the parameter selection for binary thresholding, perspective transformation etc based on an optimiser
 3. Machine learning can be used to make the pipeline for robust
 
 
