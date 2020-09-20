@@ -19,6 +19,11 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
+
+## Helper Functions
+Detailed descrption of each function is mentioend in this section of the code. It mentions the inputs, the functioning and output of every function used in the code. Video_Processing.py pythong file is also imported to implement the pipeline difined in the helper functions on the video
+
+
 ## Reflection
 ### 1. Camera Calibration
 The OpenCv functions cv2.findChessboardCorners(), cv2.drawChessboardCorners() and cv2.calibrateCamera() are used to calibrate the camera. The 20 images located in ./camera_cal are used as input for camera calibration.
@@ -61,3 +66,72 @@ The perspective transform is used to obtain a bird's eye view of the camera view
 
 Example of prespective transform:
 ![](output_images/Image4.PNG)
+
+
+### 5. Identify Lane Lines and Fit polynomial
+After calibration, thresholding & perspective transform, an binary image is obtained with lane lines clearly visible. However, the pixels part of the lane lines to the left and right needs to be identified individually
+
+#### 5.1 Sliding Window Search
+Computed the histogram for the bottom half of the image. Identified the base of the right and left lane lines as these correspond to the two local maxima in the histogram. Defined windows to identify lane pixels, centered on the midpoint of the pixels from the below window. Curve fit done to obtain the lane lines
+
+#### 5.2 Curve Fit from Previous Frame
+Performs the same function but uses information from previous fit to curve fit the lane lines. Uses the information stored in the class Line()
+
+Example of identifying lane lines and curve-fit. First image uses the sliding window and second image uses curve fit from previous frame to find the lane boundaries
+
+![](output_images/Image8.PNG)
+
+
+### 6. Calculate the Radius of Curvature & Vehicle Position
+After the x position of the lane lines are interpolated,a  2nd order polynomial fit can be found of the form Ay^2 + By + C for the two lanes.
+
+The curvature of the lane lines are calculated using the below equation:
+
+![](output_images/RC.PNG)
+
+The A and B corresponds to the coefficients of the fit of the lane lines. But these are in unit pixels and hence needs to be converted into metric units
+
+The conversion is done by modifying the coefficients as follows:
+
+Before: Ay^2 + By + C
+After: mx/(my^ 2)Ay^2 + (mx/my)By + C
+
+where mx and my corresponds to the ratio of pixels to meter in the x and y direction.
+
+The distance that the car is away from the center of the lane is calculated by subtracting the center of the two lanes from the center of the image. The result is in unit pixels and hence multiplied by the mx ratio mentioned above
+
+
+### 7. Warp the Final Lane Boundaries on Original Image
+After running the above algorithms on the image, the identified lane boundaries are warped onto the original image along with the radius of curvature for both lane lines and vehicle position from the centre of the lane.
+
+Example of final outcome
+
+![](output_images/Image7.PNG)
+
+
+### 8. Application on Video
+The vidoes are in my repo if you want to take a look. Please open project_video_output to check the result. 
+
+The algorithm works decent on the challenge video. But needs to be refined more. Please check challenge_video_output
+
+The algorithm needs to be defninitely improved for the harder challenge. Refer harder_challenge_output
+
+NOTE: Due to my busy schedule, i work as a vehicle controls engineer, i havent explored algorithm refinement for the challenge and harder challenge video. But i will definitely try some refinement techniques in the future
+
+
+## Shortcomings
+1. Using the algorithm on steep bends/curves. As seen in the harder_challenge video.
+2. Detecting other vehicles and objects
+3. Sometimes, the tree shadows caused the algorithm to fail
+3. To a camera that is zoomed in as seen challenge_video
+
+## Possible Improvements
+1. Dynamic Thresholding 
+2. Automatiing the parameter selection for binary thresholding, perspective transformation etc based on a optimiser
+3. Machine learning can be used to make the pipeline for robust
+
+
+## References 
+* Advanced Lane Finding course material and quiz from the nanodegree program
+* Stackoverflow
+* Open source material on python and its various functions
