@@ -402,12 +402,16 @@ def process_image(img):
 def process_video():
     global num_full_search
     output1 = 'project_video_output.mp4'
+    #output1 = 'project_video_output_subclip.mp4'
     clip1 = VideoFileClip("project_video.mp4")
+    #clip1 = VideoFileClip("project_video.mp4").subclip(0,5)
     output_clip1 = clip1.fl_image(process_image)
     output_clip1.write_videofile(output1, audio=False)
 
     output2 = 'challenge_video_output.mp4'
+    #output2 = 'challenge_video_output_subclip.mp4'
     clip2 = VideoFileClip("challenge_video.mp4")
+    #clip2 = VideoFileClip("challenge_video.mp4").subclip(0,5)
     output_clip2 = clip2.fl_image(process_image)
     output_clip2.write_videofile(output2, audio=False)
 
@@ -417,7 +421,7 @@ def process_video():
     output_clip3.write_videofile(output3, audio=False)
 
     print("Num full searches", num_full_search)
-    return output_clip1, output2, output3
+    return output1, output2, output3
     #return output2
 
 #output = process_video()
