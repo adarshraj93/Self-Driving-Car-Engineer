@@ -49,6 +49,8 @@ signs data set:
 #### 2. Include an exploratory visualization of the dataset.
 
 Here is an exploratory visualization of the data set. These are raw image files from the training, validation and testing dataset. 5 random images are picked.
+
+
 ![](Images/Visualiase_Dataset.PNG)
 
 A bar chart is also plotted for the training, validation & testing dataset. Here the distribution of images per class is plotted. A wide range of number of images are available per class in each dataset are present indicating pre processing techniques can be used to reduce disparity leading to improved performance
