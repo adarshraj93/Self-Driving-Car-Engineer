@@ -1,12 +1,7 @@
 # **Traffic Sign Recognition** 
-
-## Writeup
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+### Adarsh Raj
 
 ---
-
-**Build a Traffic Sign Recognition Project**
 
 The goals / steps of this project are the following:
 * Load the data set (see below for links to the project data set)
@@ -36,67 +31,74 @@ The goals / steps of this project are the following:
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! You are in the project that has all the codes, saved models and data used
 
 ### Data Set Summary & Exploration
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
+I used the numpy library in python to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. These are raw image files from the training, validation and testing dataset. 5 random images are picked.
+![](Images/Visualiase_Dataset.PNG)
 
-![alt text][image1]
+A bar chart is also plotted for the training, validation & testing dataset. Here the distribution of images per class is plotted. A wide range of number of images are available per class in each dataset are present indicating pre processing techniques can be used to reduce disparity leading to improved performance
+![](Images/Histogram.PNG)
+
+
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+The following preprocessing techniques are used. Each one is applied one after the other.
 
-Here is an example of a traffic sign image before and after grayscaling.
+1. Shuffling: Shuffeling is used to increase randomness and variety within the training set to increase stability of the CNN model. sklearn is used to shuffle the data
 
-![alt text][image2]
+2. Graysclaing: This technique is used to improve the CNN accuracy. OpenCV is used to convert training images to greyscale
+![](Images/Grayed.PNG)
 
-As a last step, I normalized the image data because ...
+3. Local Histogram Equalisation: This technique is used to enhance images with low contrast. Since real world images are used in the training dataset, low contrast could cause irregularities in learning. Hence, this technique spreads out the most frequent internsity values in the image. skimage is ued to apply this technique
+![](Images/Histogram_Equalised.PNG) 
 
-I decided to generate additional data because ... 
+4. Normalization: This technique changes the range of the pixel intensity values. The data is normalized to have a uniform distribution with a mean of zero and equal variance. 
+![](Images/Normalised.PNG)
 
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+The final preproccesd images (random 5 images) for each dataset is shown below:
+![](Images/Preprocessed.PNG)
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+My final model is a modified Lenet 5 architecture and consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 preprocessed image   							| 
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 10x10x16 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
+| Flatten					|					 Input: 5x5x16 -> Output: 400							|
+| Dropout     | keep_prob = 0.8    |
+| Fully connected    | Input: 400 -> Output: 120 |
+| RELU					|												|
+| Dropout     | keep_prob = 0.75    |
+| Fully connected    | Input: 120 -> Ouput: 84 |
+| RELU					|												|
+| Fully connected    | Input: 84 -> Output: 43 |
  
-
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
