@@ -53,7 +53,7 @@ Here is an exploratory visualization of the data set. These are raw image files 
 
 ![](Images/Visualiase_Dataset.PNG)
 
-A bar chart is also plotted for the training, validation & testing dataset. Here the distribution of images per class is plotted. A wide range of number of images are available per class in each dataset are present indicating pre processing techniques can be used to reduce disparity leading to improved performance
+A bar chart is also plotted for the training, validation & testing dataset. Here the distribution of images per class is plotted. A wide range of number of images per class in each dataset are present indicating pre processing techniques can be used to reduce disparity leading to improved performance
 ![](Images/Histogram.PNG)
 
 
@@ -64,12 +64,12 @@ A bar chart is also plotted for the training, validation & testing dataset. Here
 
 The following preprocessing techniques are used. Each one is applied one after the other.
 
-1. Shuffling: Shuffeling is used to increase randomness and variety within the training set to increase stability of the CNN model. sklearn is used to shuffle the data
+1. Shuffling: Shuffling is used to increase randomness and variety within the training set to increase stability of the CNN model. sklearn is used to shuffle the data
 
 2. Graysclaing: This technique is used to improve the CNN accuracy. OpenCV is used to convert training images to greyscale
 ![](Images/Grayed.PNG)
 
-3. Local Histogram Equalisation: This technique is used to enhance images with low contrast. Since real world images are used in the training dataset, low contrast could cause irregularities in learning. Hence, this technique spreads out the most frequent internsity values in the image. skimage is ued to apply this technique
+3. Local Histogram Equalisation: This technique is used to enhance images with low contrast. Since real world images are used in the training dataset, low contrast could cause irregularities in learning. Hence, this technique spreads out the most frequent intensity values in the image. skimage is ued to apply this technique
 ![](Images/Histogram_Equalised.PNG) 
 
 4. Normalization: This technique changes the range of the pixel intensity values. The data is normalized to have a uniform distribution with a mean of zero and equal variance. 
@@ -123,7 +123,7 @@ My final model results were:
 * validation set accuracy of 93.46% 
 * test set accuracy of 92.209%
 
-The Lenet architecture implemented in the Lenet Lab was used as the starting point. With this model the validation accuracy was limited to 80-90%. Addtionaly, he loss and accuracy plots revealed overfitting. Two dropout layers were introduced to eliminated overfitting. The keep probabilites for both the layers were tuned by trial and error. Also EPOCHS and batch size was tuned by trial and error to achieve the required validation accuracy. The below plots of loss and accuracy indicate a smooth transition as the number of EPOCHS increases
+The Lenet architecture implemented in the Lenet Lab was used as the starting point. With this model the validation accuracy was limited to 80-90%. Addtionaly, the loss and accuracy plots revealed overfitting. Two dropout layers were introduced to eliminate overfitting. The keep probabilites for both the layers were tuned by trial and error. Also EPOCHS and batch size were tuned by trial and error to achieve the required validation accuracy. The below plots of loss and accuracy indicate a smooth transition as the number of EPOCHS increases
 
 ![](Images/Convergence.PNG)
 
