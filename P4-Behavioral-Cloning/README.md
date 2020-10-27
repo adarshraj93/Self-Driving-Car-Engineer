@@ -69,3 +69,36 @@ At the end, the vehicle is able to drive autonomously around the track with leav
 The final model architecture (model_class.py lines 84-102) consisted of a convolution neural network with the following layers and layer sizes ...
 
 ![](Images/finalmodel.JPG)
+
+
+#### 3. Creation of the Training Set & Training Process
+
+I used the data provided by Udacity to train my model. Here is an example image of center lane driving:
+
+![](Images/center_2016_12_01_13_43_53_287.jpg)
+
+
+I also used the left and right camera images. The left camera image is as below:
+
+![](Images/left_2016_12_01_13_43_53_287.jpg)
+
+
+The right camera image is as below:
+
+![](Images/right_2016_12_01_13_43_53_287.jpg)
+
+I augmented the data set to flip images and angles to generalise the model (model_class.py lines 67 -72)
+
+
+After the collection process, I had 48216 number of data points. I then preprocessed this data by normalising and mean centering the image. I also cropped out all the irrelevant information from the image to reduce computional requirements. The final image was 65x320x3
+
+
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 2 as evidenced by increasing loss after 2. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+![](Images/Loss.JPG)
+
+
+
+**Note: Please refer to the video in the repo for final results. Please downlaod the data provided by Udacity to run the model_class.py**
