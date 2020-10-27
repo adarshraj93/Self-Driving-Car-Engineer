@@ -21,7 +21,7 @@ My project includes the following files:
 * model_class.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* README.md file summarizing the results
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
@@ -49,18 +49,18 @@ The model was trained and validated on different data sets to ensure that the mo
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model_class.py line 105).
+The model used an adam optimizer, so the learning rate was not tuned manually (model_class.py line 105). It was optimised to the mean square error of the steering angle
 
 #### 4. Appropriate training data
 
-Training data privuided by Udacit was chosen to keep the vehicle driving on the road. It contains 9 laps of track 1 along with recivery data. Hence i thought this is good.
+Training data provided by Udacity was chosen to keep the vehicle driving on the road. It contains 9 laps of track along with recovery data. Hence i thought this is good.
 
 ### Model Architecture and Training Strategy
 
 #### 1. Solution Design Approach
-The model used by the NVIDIA team for steering control of autonomousvehicle was used. This model has 5 convolutional layers and proven success in steeering control. I augmented the training data. The centre, left and right images was also used. Steering correction was also added. The validation data was split from the trainig data in the ratio 20% to 80%. Finally the simulator was used to see how well the car drove around the track. The vehicle did fall off the track with increased speed.
+The model used by the NVIDIA team for steering control of an autonomous vehicle was used. This model had 5 convolutional layers and proved success in steering control. I augmented the training data. The centre, left and right images was also used. Steering correction was also added. The validation data was split from the trainig data in the ratio 20% to 80%. Finally the simulator was used to see how well the car drove around the track. The vehicle did fall off the track with increased speed.
 
-At the end, the vehicle is able to drive autonomously around the track with leaving the road.
+At the end, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ![](Images/NVIDIA.JPG)
 
