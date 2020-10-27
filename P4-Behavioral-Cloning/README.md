@@ -54,3 +54,18 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 #### 4. Appropriate training data
 
 Training data privuided by Udacit was chosen to keep the vehicle driving on the road. It contains 9 laps of track 1 along with recivery data. Hence i thought this is good.
+
+### Model Architecture and Training Strategy
+
+#### 1. Solution Design Approach
+The model used by the NVIDIA team for steering control of autonomousvehicle was used. This model has 5 convolutional layers and proven success in steeering control. I augmented the training data. The centre, left and right images was also used. Steering correction was also added. The validation data was split from the trainig data in the ratio 20% to 80%. Finally the simulator was used to see how well the car drove around the track. The vehicle did fall off the track with increased speed.
+
+At the end, the vehicle is able to drive autonomously around the track with leaving the road.
+
+![](Images/NVIDIA.JPG)
+
+#### 2. Final Model Architecture
+
+The final model architecture (model_class.py lines 84-102) consisted of a convolution neural network with the following layers and layer sizes ...
+
+![](Images/finalmodel.JPG)
