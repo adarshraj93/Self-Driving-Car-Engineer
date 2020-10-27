@@ -46,3 +46,11 @@ The model includes RELU layers to introduce nonlinearity (code line 88-92), and 
 The model contains dropout layers in order to reduce overfitting (model_class.py lines 97-101). 
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 75-66). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+
+#### 3. Model parameter tuning
+
+The model used an adam optimizer, so the learning rate was not tuned manually (model_class.py line 105).
+
+#### 4. Appropriate training data
+
+Training data privuided by Udacit was chosen to keep the vehicle driving on the road. It contains 9 laps of track 1 along with recivery data. Hence i thought this is good.
