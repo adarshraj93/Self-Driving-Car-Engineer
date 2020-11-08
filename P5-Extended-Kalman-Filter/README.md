@@ -127,3 +127,9 @@ still be compilable with cmake and make.
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+## How I did the Project
+I tried to setup the Visual Studio 2019 IDE in my computer. I followed the instructions given in this link  (https://github.com/fkeidel/CarND-Term2-ide-profile-VisualStudio) which is part of the project work. Unfortunately it didnt work for me. Had an "uws/uws.h" file not found. Hence not to waste time (spent 2-3 days to fix this), I compiled my individual files in VS 2019, copied my code to the workspace and ran the simulator from the workspace. It was successful and met the project rubric. The files here are a copy of my classroom workspace files.
+
+## Issues
+1. Spent more time setting up the environment than on the project 
+2. The instructions to setup VS IDE are entirely correct.
