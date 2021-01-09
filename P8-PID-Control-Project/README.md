@@ -2,7 +2,29 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+In this project, a PID controller is developed and tuned. It is implemented on a simulation car to follow a particular path by adjusting the steering angle.
+## Reflection
 
+#### PID Controller
+PID stands for Proportional Integral Derivative. It is one of the most popular controllers used in control loop feedback mechanism. The controller continuously calculates the error function of the parameter that needs to be controlled (in this project it is the distance from the centre line). It then applies a control input (in this project it is the steering angle) that is based on the proportional(P), integral(I) and derivative(D) of the error term for correction
+
+#### PID Parameters
+1. P (Proportional) Gain Component: This gain regulates how large the control input (steering angle) for a given error would be. Hence this gain component applies a steering angle proportional to the Cross Track Error (CTE). If the car is to the left of the centre line, it steers right and vice versa. During this maneuver it overshoots and leads to an oscillatory motion. Hence if this gain is too high, the system becomes unstable
+2. D (Derivative) Gain Component: This gain regulates the rate of change of the CTE. This indicates that if the CTE is low i.e. the desired point is reached, it smoothens the control input to reduce the overshoot and oscillations caused by the P controller. Hence if this value is too low, the osicallations might be high. This components improves system stability and settling time.
+3. I(Integral) Gain Component: This gain regulates the sum of all the CTE's at a point for a given time frame. It eliminates the steady state error caused by PD controller. It also accounts for any systematic biases.
+
+The PID controllers were manually tuned. The driving behavior of the car with respect to the parameter changes were analyzed from the simulator. The final tuned parameters were selected that allowed the car to drive smoothly around the lap without popping over ledges or lane lines. The final values are:
+P - 0.2
+I - 0.0004
+D - 2.0
+
+#### Manual Tuning Procedure
+The manual tuning procedure is as follow:
+1. Set all the PID gains to 0.
+2. Increase the P gain (Kp) until the cte is small and the oscillations are minimal. Also ensure it moves to the desired location fairly fast
+3. Increase the D gain (Kd) to remove the overshooting and the oscillations. If Kd is too high, it will lead to overshooting again
+4. Increase the I gain (Ki) to remove any steady state error. Suggest startiung with a very small number (0.0001)
+5. Tune around the gains to get the best performance
 ## Dependencies
 
 * cmake >= 3.5
