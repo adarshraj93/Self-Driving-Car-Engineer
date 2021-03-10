@@ -85,4 +85,4 @@ Traffic light classification was not a must for passing this project. This was n
 
 
 ## Note
-Please note this repository is still under developement. The extra curricular project sections will be imnplemented in the future and added to the repo. Projects will also be updated with newer concepts and ideas. If you have any inputs or feedback that you would like to share with me, please connect and reach out to me on [**LinkedIN**](https://www.linkedin.com/in/adarsh-rajks/) or on [**GitHub**](https://github.com/adarshraj93)
+Please note this repository is still under developement. The extra curricular project sections will be imnplemented in the future and is added to another repo [**https://github.com/adarshraj93/SDCE-Additional-Content**]. Projects will also be updated with newer concepts and ideas. If you have any inputs or feedback that you would like to share with me, please connect and reach out to me on [**LinkedIN**](https://www.linkedin.com/in/adarsh-rajks/) or on [**GitHub**](https://github.com/adarshraj93)
