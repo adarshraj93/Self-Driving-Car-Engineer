@@ -16,13 +16,17 @@ set(sources src/particle_filter.cpp src/main.cpp ${HEADERS} ${HEADERS_HPP})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
-include_directories(/usr/local/include)
-include_directories(/usr/local/opt/openssl/include)
-link_directories(/usr/local/lib)
-link_directories(/usr/local/opt/openssl/lib)
-link_directories(/usr/local/Cellar/libuv/1*/lib)
+# Detect Homebrew prefix (works for both Intel and ARM Macs)
+execute_process(COMMAND brew --prefix OUTPUT_VARIABLE HOMEBREW_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
+include_directories(${HOMEBREW_PREFIX}/include)
+include_directories(${HOMEBREW_PREFIX}/opt/openssl@3/include)
+
+link_directories(${HOMEBREW_PREFIX}/lib)
+link_directories(${HOMEBREW_PREFIX}/opt/openssl@3/lib)
+link_directories(${HOMEBREW_PREFIX}/opt/libuv/lib)
+
+endif() 
 
 
 add_executable(particle_filter ${sources})
