@@ -1,3 +1,0 @@
-/Users/araj/git/Self-Driving-Car-Engineer/P8-PID-Control-Project/build/CMakeFiles/pid.dir
-/Users/araj/git/Self-Driving-Car-Engineer/P8-PID-Control-Project/build/CMakeFiles/edit_cache.dir
-/Users/araj/git/Self-Driving-Car-Engineer/P8-PID-Control-Project/build/CMakeFiles/rebuild_cache.dir
